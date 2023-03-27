@@ -45,7 +45,7 @@
 import type { Photo } from 'pexels';
 import MediaGridItem from '../../components/MediaGridItem.vue';
 
-import { ElNotification, ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
 defineProps<{
     photoItem: Photo,

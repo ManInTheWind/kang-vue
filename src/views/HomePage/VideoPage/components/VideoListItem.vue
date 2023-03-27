@@ -10,15 +10,6 @@
           <div :key="index" v-for="(item,index) in videoItem.video_files">
               <ListTile title="link:" :content="item.link" @on-download="onDownload"></ListTile>
           </div>
-          <!-- <ListTile title="url:" :content="photoItem.url" @on-download="onDownload"></ListTile>
-          <ListTile title="original:" :content="photoItem.src.original" @on-download="onDownload"></ListTile>
-          <ListTile title="large2x:" :content="photoItem.src.large2x" @on-download="onDownload"></ListTile>
-          <ListTile title="large:" :content="photoItem.src.large" @on-download="onDownload"></ListTile>
-          <ListTile title="medium:" :content="photoItem.src.medium" @on-download="onDownload"></ListTile>
-          <ListTile title="small:" :content="photoItem.src.small" @on-download="onDownload"></ListTile>
-          <ListTile title="portrait:" :content="photoItem.src.portrait" @on-download="onDownload"></ListTile>
-          <ListTile title="landscape:" :content="photoItem.src.landscape" @on-download="onDownload"></ListTile>
-          <ListTile title="tiny:" :content="photoItem.src.tiny" @on-download="onDownload"></ListTile> -->
       </template>
   </MediaListItem>
 </template>
@@ -27,7 +18,7 @@ import MediaListItem from '../../components/MediaListItem.vue';
 import type { Video } from 'pexels';
 import ListTile from '../../components/ListTile.vue';
 
-import { ElNotification, ElMessage } from 'element-plus';
+import {  ElMessage } from 'element-plus';
 
 defineProps<{
   videoItem: Video,

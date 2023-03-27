@@ -4,7 +4,6 @@
             <el-row justify="center">
                 <el-col :span="18">
                     <slot name="image">
-                        <!-- <el-image style="width: 200px; height: 200px" :src="photoItem.src.small" fit="contain" /> -->
                     </slot>
                 </el-col>
             </el-row>

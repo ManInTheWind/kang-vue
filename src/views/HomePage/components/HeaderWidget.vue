@@ -6,7 +6,6 @@
         <template #prepend>
           <el-select v-model="currentType" :placeholder="OptionList[currentType]" style="width: 115px">
             <el-option :key="index" v-for="(item, index) in  OptionList" :label="item" :value="index" />
-            <!-- <el-option label="视频" value="2" /> -->
           </el-select>
         </template>
         <template #append>
