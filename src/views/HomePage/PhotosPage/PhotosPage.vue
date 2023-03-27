@@ -1,34 +1,32 @@
 <template>
-    <div class="content-box">
+    <div class="content-box" v-loading="loading">
+        <div>PhotoPage</div>
         <el-radio-group v-model="currentStyle" @change="handleSwitchStyle" class="style-box">
             <el-radio-button :key="item" v-for="item in styleList" :label="item">
             </el-radio-button>
         </el-radio-group>
-        <div v-loading="loading" :class="[currentStyle == '网格' ? 'grid-container' : '']">
+        <div :class="[currentStyle == '网格' ? 'grid-container' : '']">
             <div :key="item.id" v-for="item in photoResult[currentPageNo]">
                 <PhotoGridItem v-if="currentStyle == '网格'" :photo-item="item"></PhotoGridItem>
                 <PhotoListItem v-else :photo-item="item"></PhotoListItem>
             </div>
         </div>
     </div>
-
     <FooterWidget :total-page="totalPage" @current-change="onCurrentChange"></FooterWidget>
 </template>
 <script setup lang="ts">
-import type { PhotoEntity } from '@/model/PhotoEntity';
+// import type { PhotoEntity } from '@/model/PhotoEntity';
 import { onMounted, reactive, ref } from 'vue';
 import PhotoListItem from './components/PhotosListItem.vue';
 import PhotoGridItem from './components/PhotoGridItem.vue';
-import type { PexelsResultModel } from '@/model/PexelsResultModel';
 import { ElMessage } from 'element-plus';
-import { axios } from '@/service/axios';
-import { PexelsClient } from '@/constants/PexelsClient';
-import result from '@/assets/MockResult.json';
+import { PexelsClient, PexelsPhotoSuccessModel } from '@/constants/PexelsClient';
+// import result from '@/assets/MockResult.json';
 import FooterWidget from '../components/FooterWidget.vue';
-import type { ErrorResponse } from 'pexels';
-const totalPage = ref(1);
+import type { Photo } from 'pexels';
+const totalPage = ref(100);
 interface PhotoPageModel {
-    [index: number]: Array<PhotoEntity>,
+    [index: number]: Array<Photo>,
 }
 const photoResult = reactive<PhotoPageModel>({});
 const loading = ref<boolean>(false);
@@ -38,32 +36,34 @@ const currentStyle = ref<string>('网格');
 const styleList: string[] = ['网格', '列表'];
 // const API_KEY = 'Io69DKOilxJgKjR6cJBll7gjI4yuuFq7Wx39akg8Sk9JCvUD5rpVRgbp';
 onMounted(() => {
-    getData(currentPageNo.value);
+    if (Object.keys(photoResult).length == 0) {
+        // getData(currentPageNo.value);
+    }
 })
 async function getData(pageNo: number) {
     try {
         loading.value = true;
-        // const URL = `https://api.pexels.com/v1/curated?page=${pageNo}&per_page=${per_page}`;
-        const res = await PexelsClient.photos.curated({
+        const result = await PexelsClient.photos.curated({
             page: pageNo,
             per_page: per_page,
         });
-        if (res instanceof ErrorResponse) {
-            
-        }
-
-        // const result = await axios.get<PexelsResultModel>(URL, PexelsConfig.API_KEY);
-        console.log(result);
-
-        if (result.photos.length > 0) {
-            const list: PhotoEntity[] = photoResult[pageNo] || [];
+        if (PexelsPhotoSuccessModel(result)) {
+            if (result.photos.length == 0) {
+                ElMessage({
+                    showClose: true,
+                    message: '没有更多数据了',
+                    type: 'success',
+                });
+                return;
+            }
+            const list: Photo[] = photoResult[pageNo] || [];
             list.push(...result.photos);
             photoResult[pageNo] = list;
-            totalPage.value = Math.ceil(result.total_results / result.per_page);
+            // totalPage.value = Math.ceil(result.total_results / result.per_page);
         } else {
             ElMessage({
                 showClose: true,
-                message: '没有更多数据了',
+                message: result.error,
                 type: 'success',
             });
         }
@@ -96,6 +96,7 @@ const handleSwitchStyle = (style: string) => {
 .content-box {
     height: 82vh;
     margin: 1vh 0px;
+    padding: 0px 10px;
     overflow: auto;
     position: relative;
 }
