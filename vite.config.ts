@@ -14,6 +14,4 @@ export default defineConfig({
   }
 })
 
-export const PexelsConfig = {
-  API_KEY: 'Io69DKOilxJgKjR6cJBll7gjI4yuuFq7Wx39akg8Sk9JCvUD5rpVRgbp'
-}
+

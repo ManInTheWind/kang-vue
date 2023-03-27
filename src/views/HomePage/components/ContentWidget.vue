@@ -14,14 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, type Component, shallowRef, markRaw } from 'vue';
+import {  reactive, type Component, shallowRef, markRaw } from 'vue';
 import type { TabPaneName } from 'element-plus'
 import PhotosPage from '../PhotosPage/PhotosPage.vue';
 import VideoPage from '../VideoPage/VideoPage.vue';
 
 
 const comId = shallowRef<Component>(PhotosPage);
-const active = ref(0);
 
 interface TabsItem {
   name: string,
