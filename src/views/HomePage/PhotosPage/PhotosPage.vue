@@ -1,6 +1,5 @@
 <template>
     <div class="content-box" v-loading="loading">
-        <div>PhotoPage</div>
         <el-radio-group v-model="currentStyle" @change="handleSwitchStyle" class="style-box">
             <el-radio-button :key="item" v-for="item in styleList" :label="item">
             </el-radio-button>
@@ -37,11 +36,12 @@ const styleList: string[] = ['网格', '列表'];
 // const API_KEY = 'Io69DKOilxJgKjR6cJBll7gjI4yuuFq7Wx39akg8Sk9JCvUD5rpVRgbp';
 onMounted(() => {
     if (Object.keys(photoResult).length == 0) {
-        // getData(currentPageNo.value);
+        getData(currentPageNo.value);
     }
 })
 async function getData(pageNo: number) {
     try {
+
         loading.value = true;
         const result = await PexelsClient.photos.curated({
             page: pageNo,
@@ -71,7 +71,7 @@ async function getData(pageNo: number) {
         ElMessage({
             showClose: true,
             message: `请求数据失败：${error}`,
-            type: 'success',
+            type: 'error',
         });
     } finally {
         loading.value = false;

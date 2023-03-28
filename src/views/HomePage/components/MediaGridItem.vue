@@ -32,6 +32,7 @@
 
     .image-box {
         flex-grow: 1;
+        position: relative;
     }
     .description{
         height: 50px;

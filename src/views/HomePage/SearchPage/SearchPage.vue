@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <FooterWidget :total-page="totalPage" @current-change="onCurrentChange"></FooterWidget>
+    <FooterWidget :current-page="currentPageNo" :total-page="totalPage" @current-change="onCurrentChange"></FooterWidget>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref, getCurrentInstance } from 'vue';
@@ -55,6 +55,7 @@ let $event: QueryEvent;
 const onSearch = async (event: any) => {
     console.log('开始搜索:', event);
     $event = event as QueryEvent;
+    currentPageNo.value = 1;
     currentMediaType.value = $event.type;
     resetData();
     await getSearchResutl($event, currentPageNo.value);

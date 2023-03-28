@@ -1,14 +1,13 @@
 <template>
     <MediaGridItem>
         <template v-slot:image>
-            <el-image :src="photoItem.src.small" fit="contain" style="height: 100%;" 
-            :hide-on-click-modal="true"
-            :initial-index="0"
-            :preview-src-list="[photoItem.src.small,photoItem.src.medium,photoItem.src.large,photoItem.src.large2x,photoItem.src.original,photoItem.src.portrait,photoItem.src.landscape]"
-            />
+
+            <el-image :src="photoItem.src.small" fit="contain" style="height: 100%;" :hide-on-click-modal="true"
+                :initial-index="0"
+                :preview-src-list="[photoItem.src.small, photoItem.src.medium, photoItem.src.large, photoItem.src.large2x, photoItem.src.original, photoItem.src.portrait, photoItem.src.landscape]" />
         </template>
         <template v-slot:description>
-            <el-text size="small" v-if="photoItem.alt" truncated> {{ photoItem.alt }}</el-text>
+            <el-text  size="small" v-if="photoItem.alt" truncated style="width: 200px;"> {{ photoItem.alt }}</el-text>
         </template>
         <template #bottom-leading>
             <el-row>
@@ -20,6 +19,7 @@
                 </el-tag>
             </el-row>
         </template>
+
         <template #bottom-trailing>
             <el-row justify="end" align="middle">
                 <el-col :span="currentDownloadLink ? 18 : 12">
@@ -65,7 +65,6 @@ const onDownload = async () => {
         });
         return;
     }
-    console.log(url);
     const notification = ElMessage({
         showClose: true,
         message: '正在下载，请稍等',

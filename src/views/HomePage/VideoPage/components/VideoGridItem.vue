@@ -1,6 +1,10 @@
 <template>
     <MediaGridItem>
         <template v-slot:image>
+            <div class="VideoTag_videoIcon__bMRVN">
+                 <!-- Add the style and icon you want using the String format -->
+                 <font-awesome-icon :icon="['fass', 'circle-play']" />
+            </div>
             <el-image :src="videoItem.video_pictures[0].picture" fit="contain" @click="dialogVisible = true"
                 style="height: 100%;" />
         </template>
@@ -39,9 +43,10 @@
             </el-row>
         </template>
     </MediaGridItem>
-    <el-dialog v-model="dialogVisible" title="视频播放页面" width="50%" destroy-on-close :close-on-click-modal="false" >
+    <el-dialog v-model="dialogVisible" title="视频播放页面" width="50%" destroy-on-close :close-on-click-modal="false">
         <el-row justify="center" style="height: 50vh;" align="middle">
-            <video :poster="videoItem.video_pictures[0].picture" controls style="height: 100%; width: 100%; object-fit: contain;">
+            <video :poster="videoItem.video_pictures[0].picture" controls
+                style="height: 100%; width: 100%; object-fit: contain;">
                 <source :src="item.link" :key="index" v-for="(item, index) in videoItem.video_files">
                 您的播放器不支持此播放器
             </video>
@@ -156,4 +161,14 @@ const onDownload = async () => {
     }
 }
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.VideoTag_videoIcon__bMRVN {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    transition: fill .15s ease-in;
+    fill: #fff;
+    z-index: 100;
+
+}
+</style>
